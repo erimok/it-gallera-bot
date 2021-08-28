@@ -3,7 +3,6 @@
 namespace App\Handlers\Update;
 
 use App\API\UpdatesFetcher;
-use App\Commands\CommandFactory;
 use Telegram\Bot\Objects\Update;
 
 final class UpdateHandler implements \App\Handlers\HandlerInterface
@@ -14,17 +13,15 @@ final class UpdateHandler implements \App\Handlers\HandlerInterface
     private $update_fetcher;
 
     /**
-     * @var \App\Commands\CommandFactory
+     * @var \App\Handlers\Update\UpdateEventHandlerInterface[]
      */
-    private $command_factory;
+    private $update_events_handlers;
 
     public function __construct(
-        ?UpdatesFetcher $update_fetcher = null,
-        ?CommandFactory $command_factory = null
+        ?UpdatesFetcher $update_fetcher = null
     )
     {
         $this->update_fetcher = is_null($update_fetcher) ? new UpdatesFetcher() : $update_fetcher;
-        $this->command_factory = is_null($command_factory) ? new CommandFactory() : $command_factory;
     }
 
     public function launchHandler(): void
@@ -40,19 +37,11 @@ final class UpdateHandler implements \App\Handlers\HandlerInterface
 
     protected function processUpdate(Update $update): void
     {
-        foreach ($this->command_factory->getCommands() as $command) {
-            if ($command->isThatCommand($update->getMessage()->getText())) {
-                $command->launch($update);
+        foreach ($this->update_events_handlers as $handler) {
+            if ($handler->isThatEvent($update)) {
+                $handler->launch($update);
             }
         }
-    }
-
-    /**
-     * @return \App\Commands\CommandFactory
-     */
-    public function getCommandFactory(): CommandFactory
-    {
-        return $this->command_factory;
     }
 
     /**
@@ -61,5 +50,13 @@ final class UpdateHandler implements \App\Handlers\HandlerInterface
     public function getUpdateFetcher(): UpdatesFetcher
     {
         return $this->update_fetcher;
+    }
+
+    /**
+     * @param \App\Handlers\Update\UpdateEventHandlerInterface[] $update_events_handlers
+     */
+    public function setUpdateEventsHandlers(array $update_events_handlers): void
+    {
+        $this->update_events_handlers = $update_events_handlers;
     }
 }

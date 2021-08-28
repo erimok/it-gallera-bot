@@ -33,6 +33,6 @@ abstract class Command implements CommandInterface
 
     public function isThatCommand(string $message_text): bool
     {
-        return ltrim($message_text, $message_text[0]) === self::NAME;
+        return  ltrim($message_text, $message_text[0]) === static::NAME;
     }
 }
