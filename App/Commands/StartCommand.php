@@ -2,17 +2,16 @@
 
 namespace App\Commands;
 
-use App\API\Receiver;
 use Telegram\Bot\Objects\Update;
 
-final class StartCommand implements CommandInterface
+final class StartCommand extends Command
 {
     const NAME = 'start';
 
     /**
      * @var string[]
      */
-    private $messages = [
+    protected $messages = [
         'Здарова, офисный планктон!',
         'Меня зовут <b>Κλαύδιος Πόντιος Βιεμπάτ</b> (Клавдий Понтий Въебат)',
         'Отные я тим лид на Вашей галере.',
@@ -23,20 +22,11 @@ final class StartCommand implements CommandInterface
     /**
      * @var string
      */
-    private $sticker_id = 'CAACAgIAAxkBAAMWYR6WwHM6vqRtfAixSOSXB38IqxYAAr4AAyUDUg8KwNGmBAnC8SAE';
-
-    /**
-     * @var \App\API\Receiver
-     */
-    private $receiver;
-
-    public function __construct(?Receiver $receiver)
-    {
-        $this->receiver = is_null($receiver) ? new Receiver() : $receiver;
-    }
+    protected $sticker_id = 'CAACAgIAAxkBAAMWYR6WwHM6vqRtfAixSOSXB38IqxYAAr4AAyUDUg8KwNGmBAnC8SAE';
 
     /**
      * @throws \Telegram\Bot\Exceptions\TelegramSDKException
+     * @codeCoverageIgnore
      */
     public function launch(Update $update): void
     {
@@ -49,13 +39,7 @@ final class StartCommand implements CommandInterface
         if (!empty($this->messages)) {
             foreach ($this->messages as $message) {
                 $this->receiver->sendMessage($chat_id, $message);
-                sleep(1);
             }
         }
-    }
-
-    public function isThatCommand(string $message_text): bool
-    {
-        return ltrim($message_text, $message_text[0]) === self::NAME;
     }
 }

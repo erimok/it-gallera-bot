@@ -11,6 +11,7 @@ final class CommandFactory
 
     /**
      * @param \App\Commands\CommandInterface[] $commands
+     * @codeCoverageIgnore
      */
     public function setCommands(array $commands): void
     {
@@ -20,7 +21,7 @@ final class CommandFactory
     /**
      * @throws \Exception
      */
-    public function getCommand(string $command_name): CommandInterface
+    public function getCommand(string $command_name): Command
     {
         if (!key_exists($command_name, $this->commands)) {
             throw new \Exception('Command not found');
@@ -31,6 +32,7 @@ final class CommandFactory
 
     /**
      * @return \App\Commands\CommandInterface[]
+     * @codeCoverageIgnore
      */
     public function getCommands(): array
     {

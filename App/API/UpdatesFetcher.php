@@ -7,7 +7,6 @@ final class UpdatesFetcher
     /**
      * @var \Telegram\Bot\Objects\Update[]
      */
-    // todo add removing updates from array
     private $updates = [];
 
     /**
@@ -34,16 +33,28 @@ final class UpdatesFetcher
         $this->updates = array_merge($this->updates, $new_updates);
     }
 
+    /**
+     * @return int|null
+     * @codeCoverageIgnore
+     */
     public function getLastProcessedUpdateId(): ?int
     {
         return $this->last_processed_update_id;
     }
 
+    /**
+     * @param int $last_processed_update_id
+     * @codeCoverageIgnore
+     */
     public function setLastProcessedUpdateId(int $last_processed_update_id): void
     {
         $this->last_processed_update_id = $last_processed_update_id;
     }
 
+    /**
+     * @return \Telegram\Bot\Objects\Update[]
+     * @codeCoverageIgnore
+     */
     public function getUpdates(): array
     {
         return $this->updates;

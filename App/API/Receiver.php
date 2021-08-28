@@ -5,7 +5,7 @@ namespace App\API;
 use App\Services\RandomSleep;
 use Telegram\Bot\Objects\Message;
 
-final class Receiver
+class Receiver
 {
     /**
      * @var \Telegram\Bot\Api

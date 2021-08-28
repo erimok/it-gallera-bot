@@ -27,15 +27,6 @@ final class UpdateHandler implements \App\Handlers\HandlerInterface
         $this->command_factory = is_null($command_factory) ? new CommandFactory() : $command_factory;
     }
 
-    protected function processUpdate(Update $update): void
-    {
-        foreach ($this->command_factory->getCommands() as $command) {
-            if ($command->isThatCommand($update->getMessage()->getText())) {
-                $command->launch($update);
-            }
-        }
-    }
-
     public function launchHandler(): void
     {
         $this->update_fetcher->getBotUpdatesFormApi();
@@ -44,6 +35,15 @@ final class UpdateHandler implements \App\Handlers\HandlerInterface
             $this->processUpdate($update);
             $this->update_fetcher->setLastProcessedUpdateId($update->getUpdateId());
             $this->update_fetcher->removeUpdate($id);
+        }
+    }
+
+    protected function processUpdate(Update $update): void
+    {
+        foreach ($this->command_factory->getCommands() as $command) {
+            if ($command->isThatCommand($update->getMessage()->getText())) {
+                $command->launch($update);
+            }
         }
     }
 
