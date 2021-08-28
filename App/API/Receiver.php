@@ -7,6 +7,8 @@ use Telegram\Bot\Objects\Message;
 
 class Receiver
 {
+    use RandomSleep;
+
     /**
      * @var \Telegram\Bot\Api
      */
@@ -32,7 +34,7 @@ class Receiver
     public function sendMessage(string $chat_id, string $message, ?string $reply_to_message_id = null): Message
     {
         $this->chat_action->send($chat_id);
-        RandomSleep::sleep();
+        $this->sleep();
 
         $params = [
             'chat_id' => $chat_id,

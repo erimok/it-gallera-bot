@@ -30,7 +30,9 @@ final class UpdatesFetcher
             'offset' => $this->last_processed_update_id + 1
         ]);
 
-        $this->updates = array_merge($this->updates, $new_updates);
+        foreach ($new_updates as $update) {
+            $this->updates[$update->getUpdateId()] = $update;
+        }
     }
 
     /**

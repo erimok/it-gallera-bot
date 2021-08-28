@@ -6,6 +6,8 @@ use App\Handlers\HandlerInterface;
 
 final class Bot
 {
+    const VERSION = '1.0.0';
+
     /**
      * @var \App\Handlers\HandlerInterface[]
      */

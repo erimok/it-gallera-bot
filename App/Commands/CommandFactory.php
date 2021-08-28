@@ -5,12 +5,12 @@ namespace App\Commands;
 final class CommandFactory
 {
     /**
-     * @var \App\Commands\CommandInterface[]
+     * @var \App\Commands\Command[]
      */
     private $commands;
 
     /**
-     * @param \App\Commands\CommandInterface[] $commands
+     * @param \App\Commands\Command[] $commands
      * @codeCoverageIgnore
      */
     public function setCommands(array $commands): void
@@ -31,7 +31,7 @@ final class CommandFactory
     }
 
     /**
-     * @return \App\Commands\CommandInterface[]
+     * @return \App\Commands\Command[]
      * @codeCoverageIgnore
      */
     public function getCommands(): array

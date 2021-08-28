@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-class RandomSleep
+trait RandomSleep
 {
     /**
      * @codeCoverageIgnore
      */
-    public static function sleep(): void
+    public function sleep(): void
     {
         sleep(rand(2,5));
     }

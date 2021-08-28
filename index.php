@@ -2,6 +2,7 @@
 
 use App\API\Receiver;
 use App\Bot;
+use App\Commands\HelpCommand;
 use App\Commands\StartCommand;
 use App\Events\BotName\BotNameReaction;
 use App\Events\BotName\BotNameReactionFactory;
@@ -30,7 +31,8 @@ $bot_name_reactions_factory->setReactions($bot_name_reactions);
 
 $command_handler = new CommandsHandler();
 $command_handler->getCommandFactory()->setCommands([
-    StartCommand::NAME => new StartCommand($receiver)
+    StartCommand::NAME => new StartCommand($receiver),
+    HelpCommand::NAME => new HelpCommand($receiver)
 ]);
 
 $update_handler = new UpdateHandler();
