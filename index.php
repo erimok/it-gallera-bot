@@ -24,6 +24,13 @@ $bot_name_reactions = [
     new BotNameReaction('Будешь много меня дергать - на следующем assessment вернешься на junior!'),
     new BotNameReaction('Опять вопросы?! А что у нас Google и Stackoverflow забанили?'),
     new BotNameReaction('Я могу спокойно кофе попить?!'),
+    new BotNameReaction('Когда уже наступит пятница?! 😭'),
+    new BotNameReaction('*Чем-то занят*'),
+    new BotNameReaction('*Делает вид, что чем-то занят*'),
+    new BotNameReaction('Я разрешаю тебе учиться на своих ошибках, только не пингуй меня 🧐'),
+    new BotNameReaction('Уже выучил SOLID?! Тогда чего пишешь? 😡'),
+    new BotNameReaction('Хочется поговорить?! - Сейчас поговорим за ООП 😈'),
+    new BotNameReaction('Я же говорил, что меня звать можно только на coffee break! ☕️'),
 ];
 
 $bot_name_reactions_factory = new BotNameReactionFactory();
@@ -31,8 +38,8 @@ $bot_name_reactions_factory->setReactions($bot_name_reactions);
 
 $command_handler = new CommandsHandler();
 $command_handler->getCommandFactory()->setCommands([
-    StartCommand::NAME => new StartCommand($receiver),
-    HelpCommand::NAME => new HelpCommand($receiver)
+    new HelpCommand($receiver),
+    new StartCommand($receiver),
 ]);
 
 $update_handler = new UpdateHandler();

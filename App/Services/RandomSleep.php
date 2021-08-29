@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+/**
+ * @deprecated
+ */
 trait RandomSleep
 {
     /**

@@ -31,12 +31,14 @@ final class UpdatesFetcherTest extends TestCase
 
     /**
      * @depends testGetBotUpdatesFormApi
+     * todo check logic
      */
     public function testRemoveUpdate()
     {
         $this->assertEmpty($this->update_fetcher->getUpdates());
     }
 
+    // todo check
     public function testGetBotUpdatesFormApi()
     {
         $this->update_fetcher->getBotUpdatesFormApi();

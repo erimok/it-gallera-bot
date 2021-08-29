@@ -15,7 +15,9 @@ final class CommandFactory
      */
     public function setCommands(array $commands): void
     {
-        $this->commands = $commands;
+        foreach ($commands as $command) {
+            $this->commands[$command::NAME] = $command;
+        }
     }
 
     /**

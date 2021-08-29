@@ -3,6 +3,7 @@
 namespace App\API;
 
 use App\Services\RandomSleep;
+use App\Services\SleepTimeSetter;
 use Telegram\Bot\Objects\Message;
 
 class Receiver
@@ -19,13 +20,20 @@ class Receiver
      */
     private $chat_action;
 
+    /**
+     * @var SleepTimeSetter
+     */
+    private $sleep_time_setter;
+
     public function __construct(
         ?\Telegram\Bot\Api $api = null,
-        ?ChatAction $chat_action = null
+        ?ChatAction $chat_action = null,
+        ?SleepTimeSetter $sleep_time_setter = null
     )
     {
         $this->telegram_api = is_null($api) ? API::getInstance()->getTelegramApi() : $api;
         $this->chat_action = is_null($chat_action) ? new ChatAction() : $chat_action;
+        $this->sleep_time_setter = is_null($sleep_time_setter) ? new SleepTimeSetter() : $sleep_time_setter;
     }
 
     /**
@@ -34,7 +42,7 @@ class Receiver
     public function sendMessage(string $chat_id, string $message, ?string $reply_to_message_id = null): Message
     {
         $this->chat_action->send($chat_id);
-        $this->sleep();
+        $this->sleep_time_setter->sleepByStringLength($message);
 
         $params = [
             'chat_id' => $chat_id,

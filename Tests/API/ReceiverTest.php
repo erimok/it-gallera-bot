@@ -4,11 +4,11 @@ namespace API;
 
 use App\API\ChatAction;
 use App\API\Receiver;
+use App\Services\SleepTimeSetter;
 use PHPUnit\Framework\TestCase;
 use Telegram\Bot\Api;
 use Telegram\Bot\Objects\Chat;
 use Telegram\Bot\Objects\Message;
-use Telegram\Bot\TelegramRequest;
 use Telegram\Bot\TelegramResponse;
 
 final class ReceiverTest extends TestCase
@@ -38,6 +38,11 @@ final class ReceiverTest extends TestCase
 
         $chat_action->method('send')
             ->willReturn($telegram_response);
+
+        $sleep_time_setter = $this->createMock(SleepTimeSetter::class);
+        $sleep_time_setter->method('sleepByStringLength')->willReturnCallback(function () {
+            return;
+        });
 
         $this->receiver = new Receiver($this->telegram_api, $chat_action);
     }
