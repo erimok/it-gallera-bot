@@ -35,11 +35,16 @@ final class API
 
     /**
      * @throws \Exception
+     * todo additional test case
      */
-    public static function getInstance(): self
+    public static function getInstance(string $bot_token = null): self
     {
         if (!isset(self::$api)) {
-            self::$api = new API($_ENV['TELEGRAM_BOT_TOKEN']);
+            if (!empty($bot_token)) {
+                self::$api = new API($bot_token);
+            } else {
+                self::$api = new API($_ENV['TELEGRAM_BOT_TOKEN']);
+            }
         }
 
         return self::$api;

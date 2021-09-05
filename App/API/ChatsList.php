@@ -29,8 +29,12 @@ class ChatsList
         return self::$chat_list;
     }
 
-    public function addChatToList(Chat $chat): void
+    public function addChatToList(?Chat $chat): void
     {
+        if (is_null($chat)) {
+            return;
+        }
+
         $this->chats[$chat->getId()] = $chat;
     }
 

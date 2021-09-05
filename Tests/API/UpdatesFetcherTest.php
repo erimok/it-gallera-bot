@@ -38,7 +38,6 @@ final class UpdatesFetcherTest extends TestCase
         $this->assertEmpty($this->update_fetcher->getUpdates());
     }
 
-    // todo check
     public function testGetBotUpdatesFormApi()
     {
         $this->update_fetcher->getBotUpdatesFormApi();
@@ -46,6 +45,6 @@ final class UpdatesFetcherTest extends TestCase
         $updates = $this->update_fetcher->getUpdates();
 
         $this->assertIsArray($updates);
-        $this->assertInstanceOf(Update::class, $updates[0]);
+        $this->assertInstanceOf(Update::class, $updates[array_key_first($updates)]);
     }
 }

@@ -4,10 +4,13 @@ namespace App\Handlers\Update;
 
 use App\API\ChatsList;
 use App\API\UpdatesFetcher;
+use App\Services\ChatUtil;
 use Telegram\Bot\Objects\Update;
 
 final class UpdateHandler implements \App\Handlers\HandlerInterface
 {
+    use ChatUtil;
+
     /**
      * @var \App\API\UpdatesFetcher
      */
@@ -32,12 +35,12 @@ final class UpdateHandler implements \App\Handlers\HandlerInterface
     {
         $this->update_fetcher->getBotUpdatesFormApi();
 
-        print_r(ChatsList::getInstance()->getChats());
+        print_r($this->update_fetcher->getUpdates());
 
         foreach ($this->update_fetcher->getUpdates() as $id => $update) {
             $this->processUpdate($update);
 
-            ChatsList::getInstance()->addChatToList($update->getMessage()->getChat());
+            ChatsList::getInstance()->addChatToList($this->getChatFromMessage($update->getMessage()));
 
             $this->update_fetcher->setLastProcessedUpdateId($update->getUpdateId());
             $this->update_fetcher->removeUpdate($id);

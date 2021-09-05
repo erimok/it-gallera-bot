@@ -65,6 +65,14 @@ class BotNameHandler implements UpdateEventHandlerInterface
 
     public function isThatEvent(Update $update): bool
     {
+        if (empty($update->getMessage())) {
+            return false;
+        }
+
+        if (empty($update->getMessage()->getText())) {
+            return false;
+        }
+
         $message = $update->getMessage()->getText();
 
         foreach ($this->bot_names as $name) {

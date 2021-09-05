@@ -30,16 +30,15 @@ class CommandsHandler implements UpdateEventHandlerInterface
         $this->command_validation = is_null($command_validation) ? new CommandValidation() : $command_validation;
     }
 
-    public function launch(Update $update): void
+    public function launch(Update $update, string $bot_name = null): void
     {
         $text = $update->getMessage()->getText();
         $commands = $this->command_factory->getCommands();
+        $bot_name = is_null($bot_name) ? $_ENV['BOT_NAME'] : $bot_name;
 
         foreach ($commands as $command) {
-            // todo bot_name rework
             if (
-                $this->command_validation->isThatBotCommand($text, $command::NAME, 'ItGalleraBot')
-//                $command->isThatCommand($text)
+                $this->command_validation->isThatBotCommand($text, $command::NAME, $bot_name)
             ) {
                 $command->launch($update);
                 return;

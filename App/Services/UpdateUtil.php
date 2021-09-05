@@ -6,7 +6,7 @@ use Telegram\Bot\Objects\Update;
 
 trait UpdateUtil
 {
-    protected function isUpdateHasText(Update $update): bool
+    public function isUpdateHasText(Update $update): bool
     {
         if (empty($update->getMessage())) {
             return false;

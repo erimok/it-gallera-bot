@@ -30,7 +30,7 @@ final class APITest extends TestCase
      */
     public function testGetTelegramApi()
     {
-        $telegram_api = API::getInstance()->getTelegramApi();
+        $telegram_api = API::getInstance('test_bot_token')->getTelegramApi();
 
         $this->assertInstanceOf(\Telegram\Bot\Api::class, $telegram_api);
         $this->assertEquals($_ENV['TELEGRAM_BOT_TOKEN'], $telegram_api->getAccessToken());
